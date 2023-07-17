@@ -28,5 +28,5 @@ Route::get( '/search', function ( Request $request ) {
         $searchField = 'zipcode';
     }
 
-    return Geocode::where( $searchField, 'like', "%$query%" )->orderBy($searchField)->get();
+    return Geocode::where( $searchField, 'like', "%$query%" )->orderBy($searchField)->limit(15)->get();
 } );
