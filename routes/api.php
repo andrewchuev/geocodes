@@ -22,11 +22,11 @@ Route::get( '/search', function ( Request $request ) {
         return [];
     }
 
-    if ( is_numeric( $query ) ) {
+    $searchField = 'place';
 
-        return Geocode::where( 'zipcode', "$query" )->get();
-    } else {
-        return Geocode::where( 'place', 'like', "%$query%" )->get();
+    if ( is_numeric( $query ) || (strlen($query) === 3 && is_numeric($query[1]))) {
+        $searchField = 'zipcode';
     }
 
+    return Geocode::where( $searchField, 'like', "%$query%" )->orderBy($searchField)->get();
 } );
